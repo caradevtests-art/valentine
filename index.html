@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For You ❤️</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI', sans-serif;
+}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff0844,#ff5e62);
+overflow:hidden;
+color:white;
+padding:20px;
+}
+
+/* Loader */
+
+#loader{
+position:fixed;
+inset:0;
+background:#ff2e63;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:1.8rem;
+z-index:999;
+}
+
+/* Card */
+
+.card{
+text-align:center;
+padding:28px;
+border-radius:25px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(18px);
+box-shadow:0 20px 50px rgba(0,0,0,.35);
+width:100%;
+max-width:420px;
+}
+
+/* Photo */
+
+.photo img{
+width:180px;
+height:180px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid white;
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+margin-bottom:20px;
+}
+
+/* Text */
+
+#text{
+font-size:1.9rem;
+min-height:70px;
+margin-bottom:25px;
+}
+
+/* BUTTON SYSTEM (PROPER GRID) */
+
+.buttons{
+position:relative;
+height:140px;
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+}
+
+/* YES = LEFT SIDE */
+
+#yes{
+justify-self:center;
+background:#00e676;
+color:white;
+padding:16px 34px;
+font-weight:bold;
+border:none;
+border-radius:14px;
+font-size:18px;
+cursor:pointer;
+touch-action:manipulation;
+transition:.25s;
+z-index:2;
+}
+
+/* NO = RIGHT SIDE ONLY */
+
+#no{
+position:absolute;
+background:white;
+color:#ff2e63;
+padding:14px 26px;
+border:none;
+border-radius:14px;
+font-size:18px;
+cursor:pointer;
+left:75%;
+top:50%;
+transform:translate(-50%,-50%);
+touch-action:manipulation;
+z-index:2;
+}
+
+/* Magical Ending */
+
+#success{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:radial-gradient(circle at center,#ff2e63,#b31242);
+visibility:hidden;
+opacity:0;
+transition:opacity 1s ease;
+overflow:hidden;
+}
+
+.love-container{
+text-align:center;
+animation:zoomIn 2s ease;
+padding:20px;
+}
+
+.love-text{
+font-size:2.4rem;
+font-weight:bold;
+}
+
+.love-sub{
+margin-top:15px;
+font-size:1.3rem;
+opacity:.9;
+}
+
+.tap-msg{
+margin-top:40px;
+opacity:.7;
+animation:pulse 2s infinite;
+}
+
+@keyframes zoomIn{
+from{transform:scale(.7); opacity:0;}
+to{transform:scale(1); opacity:1;}
+}
+
+@keyframes pulse{
+0%{opacity:.3;}
+50%{opacity:1;}
+100%{opacity:.3;}
+}
+
+/* Floating hearts */
+
+.heart{
+position:absolute;
+bottom:-40px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+to{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+/* Floating roses */
+
+.magic{
+position:absolute;
+bottom:-30px;
+font-size:22px;
+animation:floatMagic 7s linear infinite;
+}
+
+@keyframes floatMagic{
+to{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+/* Mobile */
+
+@media(max-width:400px){
+
+.photo img{
+width:150px;
+height:150px;
+}
+
+#text{
+font-size:1.6rem;
+}
+
+.love-text{
+font-size:1.9rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Music -->
+<audio autoplay loop>
+<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+</audio>
+
+<!-- Loader -->
+<div id="loader">
+Loading your surprise... ❤️
+</div>
+
+<!-- Main Card -->
+<div class="card" id="main" style="display:none;">
+
+<div class="photo">
+<img src="her-photo.jpg">
+</div>
+
+<div id="text"></div>
+
+<div class="buttons">
+<button id="yes">Yes 💖</button>
+<button id="no">No</button>
+</div>
+
+</div>
+
+<!-- Ending -->
+<div id="success">
+
+<div class="love-container">
+
+<div class="love-text">
+❤️ I KNEW YOU'D SAY YES! ❤️
+</div>
+
+<div class="love-sub">
+You just made me the happiest person . Bhartiiii ji✨
+</div>
+
+<div class="tap-msg">
+✨ Tap anywhere... ✨
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* Loader */
+
+setTimeout(()=>{
+loader.style.display="none";
+main.style.display="block";
+},2200);
+
+
+/* Typing */
+
+const message="Will You Be My Valentine? Bhartiii 🤍";
+let i=0;
+
+function type(){
+if(i<message.length){
+text.innerHTML+=message.charAt(i);
+i++;
+setTimeout(type,55);
+}
+}
+
+type();
+
+
+/* Floating hearts */
+
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*25+15)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+},300);
+
+
+/* SMART NO BUTTON (RIGHT SIDE ONLY) */
+
+const no=document.getElementById("no");
+const yes=document.getElementById("yes");
+
+let texts=["No","Really? 🥺","Think again 😭","Last chance!","Don't break my heart 💔"];
+let t=0;
+
+function dodge(){
+
+no.innerText=texts[t%texts.length];
+t++;
+
+const container=document.querySelector(".buttons");
+const rect=container.getBoundingClientRect();
+
+const padding=10;
+
+/* start from middle */
+const startX = rect.width/2;
+const maxX = rect.width - no.offsetWidth - padding;
+
+const x = Math.random()*(maxX-startX)+startX;
+const y = Math.random()*(rect.height-no.offsetHeight-padding)+padding;
+
+no.style.left=x+"px";
+no.style.top=y+"px";
+
+/* grow yes */
+yes.style.transform=`scale(${1+t*0.08})`;
+}
+
+no.addEventListener("mouseover",dodge);
+no.addEventListener("click",dodge);
+
+
+/* YES CLICK */
+
+yes.onclick=()=>{
+
+success.style.visibility="visible";
+success.style.opacity="1";
+
+setInterval(()=>{
+let el=document.createElement("div");
+el.className="magic";
+el.innerHTML=Math.random()>0.5?"🌹":"❤️";
+el.style.left=Math.random()*100+"vw";
+el.style.fontSize=(Math.random()*30+20)+"px";
+
+success.appendChild(el);
+
+setTimeout(()=>el.remove(),7000);
+
+},400);
+
+}
+
+
+/* Secret message */
+
+success.addEventListener("click",()=>{
+alert("From the first day I saw you, I knew you were special ❤️");
+});
+
+</script>
+
+</body>
+</html>
